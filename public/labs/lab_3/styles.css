@@ -1,40 +1,71 @@
 /* Add some css styles based on the tutorial at javascript.info: introduction to browser events
  https://javascript.info/introduction-browser-events */
- body {
-    background-color:#60c381;
-    padding:10px;
-  }
+body {
+  background-color: #60c381;
+  padding: 10px;
+}
 
-  h1 {
-    text-align:center;
-  }
+h1 {
+  text-align: center;
+}
 
-  li{
-      display:inline-block;
-  }
+.carousel {
+  position: relative;
+  width: 410px;
+  padding: 10px 40px;
+  border: 1px solid rgb(31, 30, 30);
+  border-radius: 15px;
+  background: rgb(105, 104, 104);
+  margin: 0 auto;
+}
 
-  img{
-      display:block;
-  }
+.carousel img {
+  display: block;
+}
 
-  .carousel{
-      position:relative;
-      width:420px;
-      padding: 10px 40px;
-      border: 1px solid #CCC;
-      border-radius: 15px;
-      background: #eee;
-  }
+.arrow {
+  position: absolute;
+  top: 47px;
+  padding: 0;
+  background: #ddd;
+  border-radius: 15px;
+  border: 1px solid gray;
+  font-size: 24px;
+  line-height: 24px;
+  color: #444;
+  display: block;
+}
 
-  .gallery{
-      width:410px;
-      overflow:hidden;
-  }
+.arrow:focus {
+  outline: none;
+}
 
-  .gallery ul{
-      height:99px;
-      width:9999px;
-      margin:0;
-      padding:0;
-      list-style:none;
-  }
+.arrow:hover {
+  background: #ccc;
+  cursor: pointer;
+}
+
+.prev {
+  left: 7px;
+}
+
+.next {
+  right: 7px;
+}
+
+.gallery {
+  width: 410px;
+  overflow: hidden;
+}
+
+.gallery ul {
+  height: 99px;
+  width: 9999px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery li {
+  display: inline-block;
+}
