@@ -45,11 +45,11 @@ h1 {
   cursor: pointer;
 }
 
-.prev {
+.left {
   left: 7px;
 }
 
-.next {
+.right {
   right: 7px;
 }
 
@@ -64,6 +64,7 @@ h1 {
   margin: 0;
   padding: 0;
   list-style: none;
+  transition: margin-left 300ms;
 }
 
 .gallery li {
