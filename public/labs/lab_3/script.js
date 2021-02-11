@@ -2,20 +2,27 @@
 
 let position = 0;
 const list = carousel.querySelector("ul");
-let move_count = 0;
+
+hide_arrow(".right");
 
 right.onclick = function () {
-  if (move_count > 0) {
-    position += 310;
-    list.style.marginLeft = position + "px";
-    move_count -= 1;
-  }
+  position += 310;
+  list.style.marginLeft = position + "px";
+  hide_arrow(".right");
+  unhide_arrow(".left");
 };
 
 left.onclick = function () {
-  if (move_count < 1) {
-    position -= 310;
-    list.style.marginLeft = position + "px";
-    move_count += 1;
-  }
+  position -= 310;
+  list.style.marginLeft = position + "px";
+  unhide_arrow(".right");
+  hide_arrow(".left");
+};
+
+function hide_arrow(arrow) {
+  carousel.querySelector(arrow).style.visibility = "hidden";
+};
+
+function unhide_arrow(arrow){
+  carousel.querySelector(arrow).style.visibility = "visible";
 };
