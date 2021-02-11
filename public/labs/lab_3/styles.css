@@ -51,6 +51,7 @@ h1 {
 
 .right {
   right: 7px;
+  visibility: hidden;
 }
 
 .gallery {
