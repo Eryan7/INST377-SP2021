@@ -2,20 +2,35 @@
 
 let position = 0;
 const list = carousel.querySelector("ul");
+const list2 = carousel.querySelectorAll("li");
 
-right.onclick = () => {
-  position += 310;
-  list.style.marginLeft = position + "px";
-  hide_arrow(".right");
-  unhide_arrow(".left");
-};
+const array = Array.from(list2);
 
-left.onclick = () => {
-  position -= 310;
-  list.style.marginLeft = position + "px";
-  unhide_arrow(".right");
-  hide_arrow(".left");
-};
+function array_right() {
+  array.forEach(() => {
+    position += 44;
+    list.style.marginLeft = position + "px";
+    unhide_arrow(".left");
+    hide_arrow(".right");
+  });
+}
+
+function array_left() {
+  array.forEach(() => {
+    position -= 44;
+    list.style.marginLeft = position + "px";
+    unhide_arrow(".right");
+    hide_arrow(".left");
+  });
+}
+
+left.addEventListener("click", () => {
+  array_left();
+});
+
+right.addEventListener("click", () => {
+  array_right();
+});
 
 let hide_arrow = (arrow) => {
   carousel.querySelector(arrow).style.visibility = "hidden";
