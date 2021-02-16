@@ -31,10 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-function someAlgo(string, data) {
-  return data.filter((f) => f.zipcode === string);// do a bunch of math to find the thing you want;
-}
-
 app.route('/api')
   .get(async (req, res) => {
     console.log('GET request detected');
@@ -48,6 +44,8 @@ app.route('/api')
     console.log('Form data in res.body', req.body);
     //res.json({facilities: dataStore});
     res.send('<p>Hello World</p>');
+    console.log('Now send something back to your client');
+    // res.json({data: dataToSendToFrontEnd});
   });
 
 app.listen(port, async () => {
