@@ -1,0 +1,27 @@
+.game {
+  width: 500px;
+  height: 730px;
+  position: absolute;
+}
+
+.sky {
+  background-image: url(images/fb-game-background.png);
+  width: 500px;
+  height: 580px;
+  position: absolute;
+}
+
+.ground{
+    background-image: url(images/bottom-background.png);
+    width: 500px;
+    height: 150px;
+    position: absolute;
+    top: 580px;
+}
+
+.bird{
+    background-image:url(images/flappy-bird.png);
+    position: absolute;
+    height: 45px;
+    width: 60px;
+}
