@@ -67,7 +67,7 @@ function generateObstacle(){
         };
 
         if (obstacleLeft > 200 && obstacleLeft < 280 
-            && birdBottom < obstacleBottom + 153){
+            && (birdBottom < obstacleBottom + 153||birdBottom > obstacleBottom + gap - 200)){
             gameOver();
             clearInterval(timerID);
         };
