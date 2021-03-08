@@ -17,11 +17,18 @@
     <div class="columns">
       <div class="column">
         <form class="form">
-          <input type="text" name="search" id="search" placeholder="Search for a ZIP code!">
+          <label for="search">Search for a ZIP code!</label><br>
+          <input type="text" name="search" id="search" placeholder="Search for a ZIP code!"><br>
+          <button type="submit" name="submit" id="submit">Submit</button>
         </form>
-        <div class="suggestions"></div>
+        <div>
+          <ul class="resultslist">
+          </ul>
+        </div>
       </div>
-      <div class="map column" id="mapid"></div>
+      <div class="column">
+        <div class="map leaflet-container" id="mapid"></div>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>

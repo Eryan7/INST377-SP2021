@@ -1,3 +1,4 @@
+var map;
 function mapInit() {
   var mymap = L.map("mapid").setView([38.98, -76.93], 13);
   L.tileLayer(
@@ -20,7 +21,7 @@ async function dataHandler(mapObjectFromFunction) {
   function findMatches(wordToMatch, results) {
     return results.filter((location) => {
       const regex = new RegExp(wordToMatch, "gi");
-      return location.zip.match(regex);
+      return location.zip.match(regex) && location.geocoded_column_1 != "";
     });
   }
 
@@ -35,18 +36,15 @@ async function dataHandler(mapObjectFromFunction) {
 
   async function windowActions() {
     const search = document.querySelector("#search");
-    const suggestions = document.querySelector(".suggestions");
     const form = document.querySelector(".form");
+    const resultslist = document.querySelector(".resultslist");
 
     const request = await fetch("/api");
     const results = await request.json();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-    });
-
-    search.addEventListener("keyup", () => {
-      const matchArray = findMatches(search.value, results);
+      const matchArray = findMatches(search.value, results).slice(0,5);
       const html = matchArray
         .map((location) => {
           return `
@@ -63,12 +61,15 @@ async function dataHandler(mapObjectFromFunction) {
                     location.address_line_1
                   )}</span>
                 </div>
+                <div>
+                  <span class="zip">${location.zip}</span>
+                </div>
             </li>
           </div>
         `;
         })
         .join("");
-      suggestions.innerHTML = html;
+      resultslist.innerHTML = html;
     });
   }
 
