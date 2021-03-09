@@ -1,6 +1,5 @@
-var map;
 function mapInit() {
-  var mymap = L.map("mapid").setView([38.98, -76.93], 13);
+  const mymap = L.map("mapid").setView([38.98, -76.93], 13);
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
@@ -14,14 +13,14 @@ function mapInit() {
         "pk.eyJ1IjoiZXJ5YW43IiwiYSI6ImNrbTExeGRkcjBlZmcycXF0YWxhazFtODQifQ.tJt9DSVEHtrGH3xuEUDfIw",
     }
   ).addTo(mymap);
-  return map;
+  return mymap;
 }
 
 async function dataHandler(mapObjectFromFunction) {
   function findMatches(wordToMatch, results) {
     return results.filter((location) => {
       const regex = new RegExp(wordToMatch, "gi");
-      return location.zip.match(regex) && location.geocoded_column_1 != "";
+      return location.zip.match(regex) && location.geocoded_column_1 != undefined;
     });
   }
 
@@ -45,6 +44,10 @@ async function dataHandler(mapObjectFromFunction) {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const matchArray = findMatches(search.value, results).slice(0,5);
+      for (match in matchArray){
+        const coords=matchArray[match].geocoded_column_1.coordinates
+        const marker = L.marker([coords[1], coords[0]]).addTo(mapObjectFromFunction);
+      }
       const html = matchArray
         .map((location) => {
           return `
