@@ -36,43 +36,44 @@ async function dataHandler(mapObjectFromFunction) {
   async function windowActions() {
     const search = document.querySelector("#search");
     const form = document.querySelector(".form");
-    const resultslist = document.querySelector(".resultslist");
+    form.addEventListener("submit", (event) =>{
+      event.preventDefault();
+    });
 
     const request = await fetch("/api");
     const results = await request.json();
 
     form.addEventListener("submit", (event) => {
-      event.preventDefault();
+      const resultslist = document.querySelector(".resultslist");
       const matchArray = findMatches(search.value, results).slice(0,5);
-      for (match in matchArray){
-        const coords=matchArray[match].geocoded_column_1.coordinates
+      if (matchArray.length < 1 ){
+        resultslist.innerHTML=`<p>No matches found</p>`
+      };
+      for (value in matchArray){
+        const coords=matchArray[value].geocoded_column_1.coordinates
         const marker = L.marker([coords[1], coords[0]]).addTo(mapObjectFromFunction);
-      }
-      const html = matchArray
-        .map((location) => {
-          return `
+        const valueList=document.createElement("li")
+        valueList.classList.add("block")
+        valueList.classList.add("list-item")
+        valueList.innerHTML =`
           <div class="box"
             <li>
                 <div>
-                  <span class="name">${location.name}</span>
+                  <span class="name">${matchArray[value].name}</span>
                 </div>
                 <div>
-                  <span class="category">${location.category}</span>
+                  <span class="category">${matchArray[value].category}</span>
                 </div>
                 <div>
                   <span class="address">${toTitleCase(
-                    location.address_line_1
+                    matchArray[value].address_line_1
                   )}</span>
-                </div>
-                <div>
-                  <span class="zip">${location.zip}</span>
                 </div>
             </li>
           </div>
         `;
-        })
-        .join("");
-      resultslist.innerHTML = html;
+        resultslist.append(valueList);
+        }
     });
   }
 

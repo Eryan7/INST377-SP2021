@@ -4,4 +4,19 @@
 
 .box{
     background-color: rgb(85, 224, 224);
+    margin-left: 1rem;
 }
+
+h1 {
+    font-size: 2rem;
+    font-weight: 30;
+    margin-left: 1rem;
+  }
+
+  #search{
+    margin-left: 1rem;;
+  }
+
+  #searchlabel{
+    margin-left: 1rem;;
+  }
