@@ -20,7 +20,9 @@ async function dataHandler(mapObjectFromFunction) {
   function findMatches(wordToMatch, results) {
     return results.filter((location) => {
       const regex = new RegExp(wordToMatch, "gi");
-      return location.zip.match(regex) && location.geocoded_column_1 != undefined;
+      return (
+        location.zip.match(regex) && location.geocoded_column_1 != undefined
+      );
     });
   }
 
@@ -36,7 +38,7 @@ async function dataHandler(mapObjectFromFunction) {
   async function windowActions() {
     const search = document.querySelector("#search");
     const form = document.querySelector(".form");
-    form.addEventListener("submit", (event) =>{
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
     });
 
@@ -45,35 +47,45 @@ async function dataHandler(mapObjectFromFunction) {
 
     form.addEventListener("submit", (event) => {
       const resultslist = document.querySelector(".resultslist");
-      const matchArray = findMatches(search.value, results).slice(0,5);
-      if (matchArray.length < 1 ){
-        resultslist.innerHTML=`<p>No matches found</p>`
-      };
-      for (value in matchArray){
-        const coords=matchArray[value].geocoded_column_1.coordinates
-        const marker = L.marker([coords[1], coords[0]]).addTo(mapObjectFromFunction);
-        const valueList=document.createElement("li")
-        valueList.classList.add("block")
-        valueList.classList.add("list-item")
-        valueList.innerHTML =`
-          <div class="box"
-            <li>
-                <div>
-                  <span class="name">${matchArray[value].name}</span>
-                </div>
-                <div>
-                  <span class="category">${matchArray[value].category}</span>
-                </div>
-                <div>
-                  <span class="address">${toTitleCase(
-                    matchArray[value].address_line_1
-                  )}</span>
-                </div>
-            </li>
-          </div>
-        `;
-        resultslist.append(valueList);
+      const matchArray = findMatches(search.value, results).slice(0, 5);
+      if (matchArray.length < 1 || search.value.length < 1) {
+        resultslist.innerHTML = `<p>No results found</p>`;
+      } else {
+        resultslist.innerHTML = ``;
+        mapObjectFromFunction.panTo(
+          new L.LatLng(
+            matchArray[0].geocoded_column_1.coordinates[1],
+            matchArray[0].geocoded_column_1.coordinates[0]
+          )
+        );
+        for (value in matchArray) {
+          const coords = matchArray[value].geocoded_column_1.coordinates;
+          const marker = L.marker([coords[1], coords[0]]).addTo(
+            mapObjectFromFunction
+          );
+          const valueList = document.createElement("li");
+          valueList.classList.add("block");
+          valueList.classList.add("list-item");
+          valueList.innerHTML = `
+            <div class="box"
+              <li>
+                  <div>
+                    <span class="name">${matchArray[value].name}</span>
+                  </div>
+                  <div>
+                    <span class="category">${matchArray[value].category}</span>
+                  </div>
+                  <div>
+                    <span class="address">${toTitleCase(
+                      matchArray[value].address_line_1
+                    )}</span>
+                  </div>
+              </li>
+            </div>
+          `;
+          resultslist.append(valueList);
         }
+      }
     });
   }
 
