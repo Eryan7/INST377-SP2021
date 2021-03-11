@@ -38,6 +38,7 @@ async function dataHandler(mapObjectFromFunction) {
   async function windowActions() {
     const search = document.querySelector("#search");
     const form = document.querySelector(".form");
+    const markers = [];
     form.addEventListener("submit", (event) => {
       event.preventDefault();
     });
@@ -49,6 +50,9 @@ async function dataHandler(mapObjectFromFunction) {
       const resultslist = document.querySelector(".resultslist");
       const matchArray = findMatches(search.value, results).slice(0, 5);
       if (matchArray.length < 1 || search.value.length < 1) {
+        for (marker in markers) {
+          mapObjectFromFunction.removeLayer(markers[marker]);
+        }
         resultslist.innerHTML = `<p>No results found</p>`;
       } else {
         resultslist.innerHTML = ``;
@@ -58,16 +62,20 @@ async function dataHandler(mapObjectFromFunction) {
             matchArray[0].geocoded_column_1.coordinates[0]
           )
         );
+        for (marker in markers) {
+          mapObjectFromFunction.removeLayer(markers[marker]);
+        }
         for (value in matchArray) {
           const coords = matchArray[value].geocoded_column_1.coordinates;
           const marker = L.marker([coords[1], coords[0]]).addTo(
             mapObjectFromFunction
           );
+          markers.push(marker);
+          mapObjectFromFunction.addLayer(marker);
           const valueList = document.createElement("li");
           valueList.classList.add("block");
-          valueList.classList.add("list-item");
           valueList.innerHTML = `
-            <div class="box"
+            <div class="box has-background-primary-dark has-text-white ml-4"
               <li>
                   <div>
                     <span class="name">${matchArray[value].name}</span>
